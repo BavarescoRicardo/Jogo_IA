@@ -1,0 +1,10 @@
+C:\Users\Ninguem\Documents\Repositorios\gamec\JogoSharp\bin\Debug\JogoSharp.exe.config
+C:\Users\Ninguem\Documents\Repositorios\gamec\JogoSharp\bin\Debug\JogoSharp.exe
+C:\Users\Ninguem\Documents\Repositorios\gamec\JogoSharp\bin\Debug\JogoSharp.pdb
+C:\Users\Ninguem\Documents\Repositorios\gamec\JogoSharp\obj\Debug\JogoSharp.csprojAssemblyReference.cache
+C:\Users\Ninguem\Documents\Repositorios\gamec\JogoSharp\obj\Debug\JogoSharp.JogoFrm.resources
+C:\Users\Ninguem\Documents\Repositorios\gamec\JogoSharp\obj\Debug\JogoSharp.Properties.Resources.resources
+C:\Users\Ninguem\Documents\Repositorios\gamec\JogoSharp\obj\Debug\JogoSharp.csproj.GenerateResource.cache
+C:\Users\Ninguem\Documents\Repositorios\gamec\JogoSharp\obj\Debug\JogoSharp.csproj.CoreCompileInputs.cache
+C:\Users\Ninguem\Documents\Repositorios\gamec\JogoSharp\obj\Debug\JogoSharp.exe
+C:\Users\Ninguem\Documents\Repositorios\gamec\JogoSharp\obj\Debug\JogoSharp.pdb
