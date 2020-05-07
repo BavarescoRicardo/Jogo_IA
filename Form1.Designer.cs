@@ -48,8 +48,9 @@
             this.painelObstaculos.BackColor = System.Drawing.SystemColors.ButtonShadow;
             this.painelObstaculos.Location = new System.Drawing.Point(13, 55);
             this.painelObstaculos.Name = "painelObstaculos";
-            this.painelObstaculos.Size = new System.Drawing.Size(102, 400);
+            this.painelObstaculos.Size = new System.Drawing.Size(72, 22);
             this.painelObstaculos.TabIndex = 1;
+            this.painelObstaculos.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.painelObstaculos_MouseDoubleClick);
             // 
             // btnComecar
             // 

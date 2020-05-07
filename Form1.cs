@@ -14,6 +14,7 @@ namespace JogoSharp
     public partial class JogoFrm : Form
     {
         bool tabuleiro = false;
+        bool movimento = false;
         Panel rato = new Panel();
         Panel queijo = new Panel();
         Panel[,] grafoPaineu = new Panel[10,10];
@@ -26,14 +27,14 @@ namespace JogoSharp
         }
         private void grafo_MouseClick(object sender, MouseEventArgs e)
         {
-            switch (tabuleiro == true)
+            switch (tabuleiro)
             {
                 case true:
-                    colocarObstacu(e);
+                    if(movimento == false)
+                        colocarObstacu(e);
                     break;
                 default:
-                    desenhaTabuleiro();
-                    desenharObstaculos();
+                    desenhaTabuleiro();                    
                     break;
             }
 
@@ -51,6 +52,10 @@ namespace JogoSharp
                 for (linha = 0; linha < 500; linha+=50)
                 {
                     g2.DrawRectangle(canetaAzul, linha, coluna, 50, 50);
+                    grafoPaineu[linha / 50, coluna / 50] = new Panel();
+                    grafoPaineu[linha / 50, coluna / 50].BackColor = Color.LightGray;
+                    grafoPaineu[linha / 50, coluna / 50].Bounds = new Rectangle(linha / 50, coluna / 50, 48, 48);
+                    grafoPaineu[linha / 50, coluna / 50].Location = new Point(linha, coluna);
                 }
             }
             tabuleiro = true;
@@ -59,13 +64,13 @@ namespace JogoSharp
             // Coloca rato na casa inicial
             rato.BackColor = Color.Blue;
             rato.Bounds = new Rectangle(50, 50, 45, 45);
-            rato.Location = new Point(450, 450);
+            rato.Location = new Point(2, 452);
             grafo.Controls.Add(rato);
 
             // Coloca queijo na casa objetivo final
             queijo.BackColor = Color.Yellow;
             queijo.Bounds = new Rectangle(50, 50, 45, 45);
-            queijo.Location = new Point(0, 0);
+            queijo.Location = new Point(2, 2);
             grafo.Controls.Add(queijo);
         }
 
@@ -74,7 +79,6 @@ namespace JogoSharp
         {
             int xResto = e.X % 50;
             int yResto = e.Y % 50;
-            grafoPaineu[e.X / 50, e.Y / 50] = new Panel();
             grafoPaineu[e.X / 50, e.Y / 50].BackColor = Color.LightGray;
             grafoPaineu[e.X / 50, e.Y / 50].Bounds = new Rectangle(e.X / 50, e.Y / 50, 48, 48);
             grafoPaineu[e.X / 50, e.Y / 50].Location = new Point(e.X - xResto, e.Y - yResto);
@@ -85,14 +89,20 @@ namespace JogoSharp
 
         private void btnComecar_Click(object sender, EventArgs e)
         {
-            Point posicao = new Point(450,450);
+            if ((tabuleiro == false) || (movimento == true))
+                return;
+            movimento = true;            
+            int n = 0;
+            Panel[] caminho;
+            caminho = algoritmo(queijo.Location, rato.Location, grafoPaineu);
             // objetivo / Substituir objetivo por lista vazia
-            while (rato.Location.Y > 0)
+            while (n < 9)
             {
-                posicao.Y -= 50;
-                rato.Location = posicao;
+                rato.Location = caminho[n].Location;
                 Thread.Sleep(500);
+                n++;
             }
+            movimento = false;
         }
 
         private void desenharObstaculos()
@@ -112,15 +122,38 @@ namespace JogoSharp
 
             // Obstaculo linha continua
             Panel obsLinha = new Panel();
-            obsLinha.BackColor = Color.LightGray;
-            obsLinha.Bounds = new Rectangle(1, 1, 50, 200);
+            obsLinha.BackColor = Color.YellowGreen;
+            obsLinha.Bounds = new Rectangle(1, 1, 50, 100);
             obsLinha.Location = new Point(5, 100);
             painelObstaculos.Controls.Add(obsLinha);
         }
 
-        private void algoritmo()
+        private Panel[] algoritmo(Point objetivo, Point atual, Panel[,] grafo)
         {
+            Panel[] caminho = new Panel[100];
+            Panel[] listaAberta = new Panel[100];
+            Panel[] listaFechada = new Panel[100];
 
+            int yAtual = atual.Y;
+            int cont = 0;
+            int coluna, linha;
+            for (coluna = 0; coluna < 10; coluna ++)
+            {
+                for (linha = 0; linha < 10; linha ++)
+                {
+
+                    caminho[linha+cont] = grafo[linha, coluna];
+                }
+                cont += 10;
+            }
+
+            return caminho;
+        }
+
+        private void painelObstaculos_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            painelObstaculos.Size = new Size(145, 160);
+            desenharObstaculos();
         }
     }
 }
