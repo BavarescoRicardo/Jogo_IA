@@ -15,6 +15,7 @@ namespace JogoSharp
     {
         bool tabuleiro = false;
         bool movimento = false;
+        Pen canetaAzul = new Pen(Color.Gray, 1);
         Panel rato = new Panel();
         Panel queijo = new Panel();
         Panel[,] grafoPaineu = new Panel[10,10];
@@ -31,7 +32,7 @@ namespace JogoSharp
             {
                 case true:
                     if(movimento == false)
-                        colocarObstacu(e);
+                        colocarObstaculo(e);
                     break;
                 default:
                     desenhaTabuleiro();                    
@@ -43,8 +44,7 @@ namespace JogoSharp
         private void desenhaTabuleiro()
         {
             #region Desenhar casas do tabuleiro
-            g2 = grafo.CreateGraphics();
-            Pen canetaAzul = new Pen(Color.Gray, 1);            
+            g2 = grafo.CreateGraphics();                      
 
             int coluna, linha;
             for (coluna = 0; coluna < 500; coluna+=50)
@@ -55,35 +55,31 @@ namespace JogoSharp
                     grafoPaineu[linha / 50, coluna / 50] = new Panel();
                     grafoPaineu[linha / 50, coluna / 50].BackColor = Color.LightGray;
                     grafoPaineu[linha / 50, coluna / 50].Bounds = new Rectangle(linha / 50, coluna / 50, 48, 48);
-                    grafoPaineu[linha / 50, coluna / 50].Location = new Point(linha, coluna);
+                    grafoPaineu[linha / 50, coluna / 50].Location = new Point(linha+2, coluna+2);
                 }
             }
             tabuleiro = true;
             #endregion
 
             // Coloca rato na casa inicial
+            rato.BackgroundImage = Image.FromFile("C:/Users/Ninguem/Documents/Repositorios/gamec/JogoSharp/ImagemRato.jpg");
             rato.BackColor = Color.Blue;
             rato.Bounds = new Rectangle(50, 50, 45, 45);
-            rato.Location = new Point(2, 452);
+            rato.Location = new Point(3, 453);
             grafo.Controls.Add(rato);
 
             // Coloca queijo na casa objetivo final
+            queijo.BackgroundImage = Image.FromFile("C:/Users/Ninguem/Documents/Repositorios/gamec/JogoSharp/ImagemQueijo.png");
             queijo.BackColor = Color.Yellow;
             queijo.Bounds = new Rectangle(50, 50, 45, 45);
-            queijo.Location = new Point(2, 2);
+            queijo.Location = new Point(3, 3);
             grafo.Controls.Add(queijo);
         }
 
         #region Colocar Obstaculo
-        private void colocarObstacu(MouseEventArgs e)
+        private void colocarObstaculo(MouseEventArgs e)
         {
-            int xResto = e.X % 50;
-            int yResto = e.Y % 50;
-            grafoPaineu[e.X / 50, e.Y / 50].BackColor = Color.LightGray;
-            grafoPaineu[e.X / 50, e.Y / 50].Bounds = new Rectangle(e.X / 50, e.Y / 50, 48, 48);
-            grafoPaineu[e.X / 50, e.Y / 50].Location = new Point(e.X - xResto, e.Y - yResto);
             grafo.Controls.Add(grafoPaineu[e.X / 50, e.Y / 50]);
-
         }
         #endregion
 
@@ -92,15 +88,18 @@ namespace JogoSharp
             if ((tabuleiro == false) || (movimento == true))
                 return;
             movimento = true;            
-            int n = 0;
+            int n = 80;
             Panel[] caminho;
             caminho = algoritmo(queijo.Location, rato.Location, grafoPaineu);
             // objetivo / Substituir objetivo por lista vazia
-            while (n < 9)
+            while (n >= 0)
             {
-                rato.Location = caminho[n].Location;
+                int cX = caminho[n].Location.X + 3;
+                int cY = caminho[n].Location.Y + 3;
+                Point p = new Point(cX, cY);
+                rato.Location = p;
                 Thread.Sleep(500);
-                n++;
+                n-=10;
             }
             movimento = false;
         }
@@ -117,8 +116,7 @@ namespace JogoSharp
             obstaculo.BackColor = Color.LightGray;
             obstaculo.Bounds = new Rectangle(1, 1, 50, 50);
             obstaculo.Location = new Point(5, 5);
-            painelObstaculos.Controls.Add(obstaculo);
-            
+            painelObstaculos.Controls.Add(obstaculo);            
 
             // Obstaculo linha continua
             Panel obsLinha = new Panel();
@@ -141,7 +139,6 @@ namespace JogoSharp
             {
                 for (linha = 0; linha < 10; linha ++)
                 {
-
                     caminho[linha+cont] = grafo[linha, coluna];
                 }
                 cont += 10;

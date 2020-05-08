@@ -35,7 +35,7 @@
             // 
             // grafo
             // 
-            this.grafo.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.grafo.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.grafo.Location = new System.Drawing.Point(200, 20);
             this.grafo.Margin = new System.Windows.Forms.Padding(0);
             this.grafo.Name = "grafo";
