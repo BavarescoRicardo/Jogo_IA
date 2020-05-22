@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -62,14 +64,14 @@ namespace JogoSharp
             #endregion
 
             // Coloca rato na casa inicial
-            rato.BackgroundImage = Image.FromFile("C:/Users/Ninguem/Documents/Repositorios/gamec/JogoSharp/ImagemRato.jpg");
+            rato.BackgroundImage =  Image.FromFile("ImagemRato.jpg");
             rato.BackColor = Color.Blue;
             rato.Bounds = new Rectangle(50, 50, 45, 45);
             rato.Location = new Point(3, 453);
             grafo.Controls.Add(rato);
 
             // Coloca queijo na casa objetivo final
-            queijo.BackgroundImage = Image.FromFile("C:/Users/Ninguem/Documents/Repositorios/gamec/JogoSharp/ImagemQueijo.png");
+            queijo.BackgroundImage = Image.FromFile("ImagemQueijo.png");
             queijo.BackColor = Color.Yellow;
             queijo.Bounds = new Rectangle(50, 50, 45, 45);
             queijo.Location = new Point(3, 3);
